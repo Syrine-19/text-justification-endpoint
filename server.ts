@@ -64,6 +64,10 @@ app.post('/api/justify', (req: Request, res: Response) => {
   res.type('text/plain').send(justified);
 });
 
+app.get('/health', (req: Request, res: Response) => {
+  res.json({ status: 'ok' });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
