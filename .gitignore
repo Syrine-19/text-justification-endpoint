@@ -6,9 +6,6 @@ yarn-error.log*
 package-lock.json
 yarn.lock
 
-# Build outputs
-dist/
-
 # IDE and editor files
 .vscode/
 .idea/
