@@ -6,6 +6,13 @@ yarn-error.log*
 package-lock.json
 yarn.lock
 
+# Build output
+dist/
+*.js
+*.js.map
+*.d.ts
+*.d.ts.map
+
 # IDE and editor files
 .vscode/
 .idea/

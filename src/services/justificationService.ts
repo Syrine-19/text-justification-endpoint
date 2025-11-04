@@ -22,7 +22,7 @@ export function justifyText(text: string, lineWidth: number = 80): string {
   return lines.join('\n');
 }
 
-export function justifyLine(words: string[], lineWidth: number): string {
+function justifyLine(words: string[], lineWidth: number): string {
   if (words.length === 1) {
     return words[0]!;
   }
@@ -47,17 +47,4 @@ export function justifyLine(words: string[], lineWidth: number): string {
 export function countWords(text: string): number {
   return text.split(/\s+/).filter(word => word.length > 0).length;
 }
-
-export function resetIfNewDay(tokenData: { wordCount: number; lastReset: Date }): void {
-  const now = new Date();
-  const lastReset = tokenData.lastReset;
-  
-  if (now.getDate() !== lastReset.getDate() || 
-      now.getMonth() !== lastReset.getMonth() || 
-      now.getFullYear() !== lastReset.getFullYear()) {
-    tokenData.wordCount = 0;
-    tokenData.lastReset = now;
-  }
-}
-
 
