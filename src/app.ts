@@ -6,7 +6,6 @@ const app: Express = express();
 app.use(express.text({ type: 'text/plain' }));
 app.use(express.json());
 
-// Root path redirects to /api
 app.get('/', (req, res) => {
   res.redirect('/api');
 });

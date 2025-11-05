@@ -1,33 +1,20 @@
-// In-memory database for tokens
-// In production, this could be replaced with a real database
+import Database from 'better-sqlite3';
+import path from 'path';
 
-export interface TokenData {
-  email: string;
-  wordCount: number;
-  lastReset: Date;
-}
+const dbPath = path.join(__dirname, '../../database.sqlite');
+const db: Database.Database = new Database(dbPath);
 
-const tokens = new Map<string, TokenData>();
+db.exec(`
+  CREATE TABLE IF NOT EXISTS tokens (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    token TEXT UNIQUE NOT NULL,
+    email TEXT NOT NULL,
+    word_count INTEGER DEFAULT 0,
+    last_reset DATE NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
 
-export const tokenStore = {
-  get: (token: string): TokenData | undefined => {
-    return tokens.get(token);
-  },
+  CREATE INDEX IF NOT EXISTS idx_token ON tokens(token);
+`);
 
-  set: (token: string, data: TokenData): void => {
-    tokens.set(token, data);
-  },
-
-  has: (token: string): boolean => {
-    return tokens.has(token);
-  },
-
-  delete: (token: string): boolean => {
-    return tokens.delete(token);
-  },
-
-  clear: (): void => {
-    tokens.clear();
-  }
-};
-
+export default db;

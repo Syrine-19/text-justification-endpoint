@@ -4,7 +4,7 @@ import { canProcessRequest, updateWordCount } from '../services/tokenService';
 import { justifyText, countWords } from '../services/justificationService';
 
 export function justifyTextHandler(req: AuthRequest, res: Response): void {
-  if (!req.tokenData) {
+  if (!req.tokenData || !req.token) {
     res.status(401).json({ error: 'Invalid or missing token' });
     return;
   }
@@ -18,12 +18,12 @@ export function justifyTextHandler(req: AuthRequest, res: Response): void {
 
   const wordCount = countWords(text);
   
-  if (!canProcessRequest(req.tokenData, wordCount)) {
+  if (!canProcessRequest(req.tokenData, wordCount, req.token)) {
     res.status(402).send('Payment Required');
     return;
   }
 
-  updateWordCount(req.tokenData, wordCount);
+  updateWordCount(req.tokenData, wordCount, req.token);
 
   const justified = justifyText(text, 80);
   res.type('text/plain').send(justified);

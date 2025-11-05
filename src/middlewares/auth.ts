@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { getToken } from '../services/tokenService';
 
 export interface AuthRequest extends Request {
+  token?: string;
   tokenData?: {
     email: string;
     wordCount: number;
@@ -24,6 +25,7 @@ export function authMiddleware(req: AuthRequest, res: Response, next: NextFuncti
     return;
   }
 
+  req.token = token;
   req.tokenData = tokenData;
   next();
 }
